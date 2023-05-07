@@ -18,12 +18,16 @@ app.use(bodyParser.urlencoded({ extended: true })); //middleware
 
 // req: request info from the front end
 // res: sends response to the front end
-app.get("/", (req, res) => {
+app.post("/api/insert", (req, res) => {
+  const description = req.body.description;
+  const amount = req.body.amount;
+  const category = req.body.category;
+
   const sqlInsert =
-    "INSERT INTO expenses (description, amount, category) VALUES ('for cat food', 120, 'groceries');";
-  db.query(sqlInsert, (err, result) => {
-    res.send(sqlInsert);
-    console.log(result);
+    "INSERT INTO expenses (description, amount, category) VALUES (?,?,?);";
+  // inserting info in our db
+  db.query(sqlInsert, [description, amount, category], (err, result) => {
+    console.log(err);
   });
 });
 
