@@ -16,8 +16,15 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true })); //middleware
 
-// req: request info from the front end
-// res: sends response to the front end
+// send info of the db to the front end
+app.get("/api/get", (req, res) => {
+  const sqlSelect = "SELECT * FROM expenses;";
+  db.query(sqlSelect, (err, result) => {
+    res.send(result); // sending all the db info
+  });
+});
+
+// receives the new expense and insert it into the db table
 app.post("/api/insert", (req, res) => {
   const description = req.body.description;
   const amount = req.body.amount;
@@ -34,3 +41,6 @@ app.post("/api/insert", (req, res) => {
 app.listen(5174, () => {
   console.log("server running on port 5174");
 }); //port
+
+// req: request info from the front end
+// res: sends response to the front end
