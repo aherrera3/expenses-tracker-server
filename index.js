@@ -34,7 +34,15 @@ app.post("/api/insert", (req, res) => {
     "INSERT INTO expenses (description, amount, category) VALUES (?,?,?);";
   // inserting info in our db
   db.query(sqlInsert, [description, amount, category], (err, result) => {
-    console.log(err);
+    if (err) console.log(err);
+  });
+});
+
+app.delete("/api/delete/:id", (req, res) => {
+  const idExpense = req.params.id;
+  const sqlDelete = "DELETE FROM expenses WHERE id = (?);";
+  db.query(sqlDelete, [idExpense], (err, result) => {
+    if (err) console.log(err);
   });
 });
 
